@@ -45,7 +45,7 @@ class PerkaraController extends Controller {
 		$tag = Helper::createOption('tag-api', true)
 			->pluck('name', 'id');
 		$team = Helper::createOption('team-api', true)
-			->pluck('name', 'id')
+			->pluck('name', 'user_id')
 			->prepend('- Select Option -', 0);
 
 		$status = [

@@ -187,4 +187,21 @@ class Perkara extends Model {
 		$model = $this->select();
 		return $model;
 	}
+
+	public function Rack() {
+		return $this->hasOne('App\Rack', 'id', 'id_rack');
+	}
+
+	public function Perkara() {
+		return $this->hasOne('App\Category', 'id', 'id_jenis_perkara');
+	}
+
+	public function Customer() {
+		return $this->hasOne('App\Customer', 'id', 'id_customer');
+	}
+
+	public function Team() {
+		return $this->hasOne('App\User', 'user_id', 'id_user');
+	}
+
 }
