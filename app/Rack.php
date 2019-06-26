@@ -1,0 +1,124 @@
+<?php
+namespace App;
+
+use Helper;
+use Illuminate\Database\Eloquent\Model;
+
+class Rack extends Model {
+	protected $table = 'rack';
+	protected $primaryKey = 'id';
+	protected $fillable = [
+		'id',
+		'id_ruangan',
+		'name',
+		'description',
+		'slug',
+		'created_at',
+		'updated_at',
+	];
+	public $datatable = [
+		'id' => [false => 'ID'],
+		'name' => [true => 'Rack'],
+		'ruangan_name' => [true => 'Ruangan'],
+		'description' => [true => 'Description'],
+	];
+	public $searching = 'name';
+	public $timestamps = false;
+	public $incrementing = true;
+	public $rules = [
+		'name' => 'required|unique:rack|min:3',
+	];
+
+	const CREATED_AT = 'created_at';
+	const UPDATED_AT = 'updated_at';
+	protected $dates = [
+		'created_at',
+		'updated_at',
+	];
+
+	protected function generateKey() {
+		$autonumber = 'C' . date('Y') . date('m');
+		return Helper::code($this->table, $this->primaryKey, $autonumber, config('website.autonumber'));
+	}
+
+	public function simpan($request) {
+		try
+		{
+			if (!$this->incrementing) {
+				$code = $this->generateKey();
+				$request[$this->primaryKey] = $code;
+			}
+
+			if (!empty($request['images'])) {
+				$file = request()->file('images');
+				$ext = $file->extension();
+				$name = Helper::unic(10) . '.' . $ext;
+				$request['images'] = $name;
+				$simpen = $file->storeAs('slider', $name);
+			}
+			$request['slug'] = str_slug($request['name']);
+			$activity = $this->create($request);
+			if ($activity->save()) {
+				session()->put('success', 'Data Has Been Added !');
+				return true;
+			}
+		} catch (\Illuminate\Database\QueryException $ex) {
+
+			session()->put('danger', $ex->getMessage());
+		}
+	}
+
+	public function hapus($data) {
+		if (!empty($data)) {
+			$data = collect($data)->flatten()->all();
+			try
+			{
+				$activity = $this->Destroy($data);
+				if ($activity) {
+					session()->put('success', 'Data Has Been Deleted !');
+					return true;
+				}
+				session()->flash('alert-danger', 'Data Can not Deleted !');
+				return false;
+			} catch (\Illuminate\Database\QueryException $ex) {
+				session()->flash('alert-danger', $ex->getMessage());
+			}
+		}
+	}
+
+	public function ubah($id, $request) {
+		try
+		{
+			if (!empty($request['images'])) {
+				$file = request()->file('images');
+				$ext = $file->extension();
+				$name = Helper::unic(10) . '.' . $ext;
+				$request['images'] = $name;
+				$simpen = $file->storeAs('slider', $name);
+			}
+
+			$request['slug'] = str_slug($request['name']);
+			$activity = $this->find($id)->update($request);
+			if ($activity) {
+				session()->put('success', 'Data Has Been Updated !');
+			}
+
+			return $activity;
+		} catch (\Illuminate\Database\QueryException $ex) {
+			session()->flash('alert-danger', $ex->getMessage());
+		}
+	}
+
+	public function baca($id = null) {
+		if (!empty($id)) {
+			return $this->find($id);
+		}
+
+		$model = $this->select();
+		return $model;
+	}
+
+	public function ruangan() {
+		return $this->hasOne('App\Ruangan', 'id', 'id_ruangan');
+	}
+}

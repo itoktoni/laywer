@@ -1,0 +1,23 @@
+{
+    "name": "hobbiot/cacheable-auth-user",
+    "description": "Cache Auth::user() for Laravel 5.3. This package add new driver to laravel.",
+    "keywords": ["laravel", "auth", "cache"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "HobbIoT",
+            "email": "dev@hobbiot.co.jp",
+            "homepage": "https://www.hobbiot.co.jp/"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.4",
+        "laravel/framework": "5.3.* | 5.4.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "HobbIoT\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
