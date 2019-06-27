@@ -192,6 +192,8 @@ return [
 		Alexusmai\LaravelFileManager\FileManagerServiceProvider::class,
 		Barryvdh\DomPDF\ServiceProvider::class,
 		Milon\Barcode\BarcodeServiceProvider::class,
+		GrahamCampbell\Flysystem\FlysystemServiceProvider::class,
+
 	],
 
 	/*
@@ -250,6 +252,7 @@ return [
 		'PDF' => Barryvdh\DomPDF\Facade::class,
 		'BARCODE1D' => Milon\Barcode\Facades\DNS1DFacade::class,
 		'BARCODE2D' => Milon\Barcode\Facades\DNS2DFacade::class,
+		'Flysystem' => GrahamCampbell\Flysystem\Facades\Flysystem::class,
 	],
 
 ];

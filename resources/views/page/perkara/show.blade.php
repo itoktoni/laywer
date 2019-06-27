@@ -36,6 +36,14 @@
                  <table class="table table-table table-bordered table-striped table-hover mb-none">
                     <tbody>
                         <tr>
+                            <th class="col-lg-2">Gedung</th>
+                            <td>{{ $data->gedung->name }}</td>
+                        </tr>
+                        <tr>
+                            <th class="col-lg-2">Ruangan</th>
+                            <td>{{ $data->ruangan->name }}</td>
+                        </tr>
+                        <tr>
                             <th class="col-lg-2">Rack</th>
                             <td>{{ $data->rack->name }}</td>
                         </tr>

@@ -1,10 +1,12 @@
 <?php
+
 namespace App;
 
 use Helper;
 use Illuminate\Database\Eloquent\Model;
 
 class Perkara extends Model {
+
 	protected $table = 'perkara';
 	protected $primaryKey = 'no_berkas';
 	protected $fillable = [
@@ -14,6 +16,8 @@ class Perkara extends Model {
 		'created_at',
 		'updated_at',
 		'id_customer',
+		'id_gedung',
+		'id_ruangan',
 		'id_rack',
 		'id_jenis_perkara',
 		'tag',
@@ -26,7 +30,6 @@ class Perkara extends Model {
 		'berkas_putus_pengadilan',
 		'status',
 		'slug',
-
 	];
 	public $datatable = [
 		'no_berkas' => [true => 'No Berkas'],
@@ -43,10 +46,12 @@ class Perkara extends Model {
 
 	const CREATED_AT = 'created_at';
 	const UPDATED_AT = 'updated_at';
+
 	protected $dates = [
 		'created_at',
 		'updated_at',
 	];
+	public $file;
 
 	protected function generateKey() {
 		$autonumber = 'C' . date('Y') . date('m');
@@ -54,8 +59,7 @@ class Perkara extends Model {
 	}
 
 	public function simpan($request) {
-		try
-		{
+		try {
 
 			$code = $this->generateKey();
 			$request[$this->primaryKey] = $code;
@@ -74,6 +78,7 @@ class Perkara extends Model {
 
 			if (!empty($request['pengadilan'])) {
 				$file = request()->file('pengadilan');
+				dd($file);
 				$ext = $file->extension();
 				$name = Helper::unic(10) . '.' . $ext;
 				$request['berkas_pengadilan'] = $name;
@@ -112,8 +117,7 @@ class Perkara extends Model {
 	public function hapus($data) {
 		if (!empty($data)) {
 			$data = collect($data)->flatten()->all();
-			try
-			{
+			try {
 				$activity = $this->Destroy($data);
 				if ($activity) {
 					session()->put('success', 'Data Has Been Deleted !');
@@ -128,8 +132,7 @@ class Perkara extends Model {
 	}
 
 	public function ubah($id, $request) {
-		try
-		{
+		try {
 
 			if (!empty($request['tags'])) {
 				$request['tag'] = json_encode(request()->get('tags'));
@@ -141,6 +144,19 @@ class Perkara extends Model {
 				$name = Helper::unic(10) . '.' . $ext;
 				$request['berkas_pemohon'] = $name;
 				$simpen = $file->storeAs('perkara', $name);
+
+//                 $path = 'remote.php/webdav/';
+				//                 $filesystem = Flysystem::connection('webdav');
+				//                 try {
+
+// //                    $response = $filesystem->createDir($path . '/' . $id);
+
+//                     $stream = fopen($file->getRealPath(), 'r+');
+				//                     $filesystem->writeStream($path .  $id . '/' . $file->getClientOriginalName(), $stream);
+				//                     fclose($stream);
+				//                 } catch (Exception $ex) {
+
+//                 }
 			}
 
 			if (!empty($request['pengadilan'])) {
@@ -186,6 +202,14 @@ class Perkara extends Model {
 
 		$model = $this->select();
 		return $model;
+	}
+
+	public function Gedung() {
+		return $this->hasOne('App\Gedung', 'id', 'id_gedung');
+	}
+
+	public function Ruangan() {
+		return $this->hasOne('App\Ruangan', 'id', 'id_ruangan');
 	}
 
 	public function Rack() {

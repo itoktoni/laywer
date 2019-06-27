@@ -58,6 +58,19 @@
 
 
 <div class="form-group">
+<label class="col-md-2 control-label">Gedung</label>
+<div class="col-md-4 {{ $errors->has('id_gedung') ? 'has-error' : ''}}">
+    {{ Form::select('id_gedung', $gedung, null, ['class'=> 'form-control', 'data-plugin-selectTwo']) }}
+</div>
+
+  <label class="col-md-2 control-label">Ruangan</label>
+    <div class="col-md-4 {{ $errors->has('id_ruangan') ? 'has-error' : ''}}">
+        {{ Form::select('id_ruangan', $ruangan, null, ['class'=> 'form-control', 'data-plugin-selectTwo']) }}
+    </div>
+</div>
+
+
+<div class="form-group">
 <label class="col-md-2 control-label">Rack</label>
 <div class="col-md-4 {{ $errors->has('id_rack') ? 'has-error' : ''}}">
     {{ Form::select('id_rack', $rack, null, ['class'=> 'form-control', 'data-plugin-selectTwo']) }}
@@ -68,6 +81,7 @@
         {{ Form::select('id_user', $team, null, ['class'=> 'form-control', 'data-plugin-selectTwo']) }}
     </div>
 </div>
+
 
 <div class="form-group">
     <label class="col-md-2 control-label">No Pendaduan</label>

@@ -33,6 +33,12 @@ class PerkaraController extends Controller {
 	}
 
 	private function share($data = null, $key = null) {
+		$gedung = Helper::createOption('gedung-api', true)
+			->pluck('name', 'id')
+			->prepend('- Select Option -', 0);
+		$ruangan = Helper::createOption('ruangan-api', true)
+			->pluck('name', 'id')
+			->prepend('- Select Option -', 0);
 		$rack = Helper::createOption('rack-api', true)
 			->pluck('name', 'id')
 			->prepend('- Select Option -', 0);
@@ -52,6 +58,8 @@ class PerkaraController extends Controller {
 			'PROCESS' => 'PROCESS', 'BANDING' => 'BANDING', 'PUTUSAN' => 'PUTUSAN',
 		];
 		$view = [
+			'gedung' => $gedung,
+			'ruangan' => $ruangan,
 			'rack' => $rack,
 			'cat' => $category,
 			'customer' => $customer,

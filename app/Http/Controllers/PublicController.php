@@ -20,6 +20,8 @@ class PublicController extends Controller {
 
 	public function index() {
 
+		// $cek = Flysystem::connection('webdav')->listContents('remote.php/webdav/');
+		// dd($cek);
 		return redirect('login');
 		// return view('welcome');
 
@@ -69,17 +71,14 @@ class PublicController extends Controller {
 					$message->subject('Notification Information From Customer');
 					$message->from(config('mail.from.address'), config('mail.from.name'));
 				});
-
 			} catch (Exception $e) {
 				// return redirect()->back();
 			}
 
 			return redirect()->back();
-
 		}
 
 		return View('frontend.' . config('website.frontend') . '.pages.contact')->with([
-
 		]);
 	}
 
@@ -168,7 +167,6 @@ class PublicController extends Controller {
 				'tag' => Helper::createOption('tag-api'),
 			]);
 		}
-
 	}
 
 	public function single($id) {
@@ -177,7 +175,6 @@ class PublicController extends Controller {
 			$data = $product->getStock($id)->first();
 			return View('frontend.' . config('website.frontend') . '.pages.single')->with('data', $data);
 		}
-
 	}
 
 	public function segment($id) {
@@ -194,6 +191,6 @@ class PublicController extends Controller {
 				'material' => $material->baca()->get(),
 			]);
 		}
-
 	}
+
 }
