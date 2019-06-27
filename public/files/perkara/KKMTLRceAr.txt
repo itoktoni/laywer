@@ -1,4 +1,0 @@
-"Document Type","Invoice External ID","Customer_External ID",Date,"Posting Period",Currency,"Exchange Rate","GL Account",Departement,Class,Location,"Sales Rep",Memo,"Item_External ID",Quantity,Weight,"Con Note Qty",Rate,Amount,Description,"Price Level","Tax Amt"
-Invoice,SIN1,SINSG1_CUST01,28/02/2018,Feb-2018,,,"90122 Accounts Receiveable",Courier,Revenue,SIN,K3-User1,,EXP,1,"1200,0000",3,,"378,6635",,,"26,5064"
-Invoice,SIN1,SINSG1_CUST01,28/02/2018,Feb-2018,,,"90122 Accounts Receiveable",Courier,Revenue,SIN,K3-User1,,FS1c,1,"1200,0000",,,"56,7995",,,"3,9760"
-Invoice,SIN2,SINHK218,28/02/2018,Feb-2018,,,"90122 Accounts Receiveable",Courier,Revenue,SIN,K3-User2,,HV,1,"800,0000",1,,"159,9069",,,"11,1935"
